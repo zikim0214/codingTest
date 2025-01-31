@@ -1,5 +1,5 @@
-package org.codingTest.level_0;
-import java.util.Scanner;
+package org.programmers.level_0;
+
 /**
  * [PCCE 기출문제] 1번 / 문자 출력
  * <a href="https://school.programmers.co.kr/learn/courses/30/lessons/340207">프로그래머스 340207</a>

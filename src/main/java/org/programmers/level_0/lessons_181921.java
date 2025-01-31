@@ -1,4 +1,4 @@
-package org.codingTest.level_0;
+package org.programmers.level_0;
 
 import java.util.ArrayList;
 import java.util.Arrays;

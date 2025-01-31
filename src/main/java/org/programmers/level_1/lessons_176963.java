@@ -1,4 +1,4 @@
-package org.codingTest.level_1;
+package org.programmers.level_1;
 
 import java.util.Arrays;
 import java.util.HashMap;

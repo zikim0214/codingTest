@@ -1,6 +1,6 @@
-package org.codingTest;
+package org.programmers;
 
-public class Main {
+public class MainProgrammers {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
