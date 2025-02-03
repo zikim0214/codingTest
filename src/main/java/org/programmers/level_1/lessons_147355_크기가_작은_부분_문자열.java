@@ -3,8 +3,8 @@ package org.programmers.level_1;
 /**
  * <a href="https://school.programmers.co.kr/learn/courses/30/lessons/147355">크기가 작은 부분 문자열</a>
  */
-public class lessons_147355 {
-    public int solution(String t, String p) {
+public class lessons_147355_크기가_작은_부분_문자열 {
+    public static int solution(String t, String p) {
         int answer = 0;
         for (int i = 0; i <= t.length() - p.length(); i++) {
             String targetText = t.substring(i, i + p.length());
@@ -16,12 +16,11 @@ public class lessons_147355 {
     }
 
     public static void main(String[] args) {
-        lessons_147355 lessons = new lessons_147355();
 //        String t = "10203";
 //        String p = "15";
         String t = "3141592";
         String p = "271";
-        System.out.println(lessons.solution(t, p));
+        System.out.println(solution(t, p));
     }
 }
 

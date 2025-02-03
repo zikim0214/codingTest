@@ -6,9 +6,8 @@ import java.util.HashMap;
 /**
  * <a href="https://school.programmers.co.kr/learn/courses/30/lessons/176963">추억 점수</a>
  */
-public class lessons_176963 {
-
-    public int[] solution(String[] name, int[] yearning, String[][] photo) {
+public class lessons_176963_추억점수 {
+    public static int[] solution(String[] name, int[] yearning, String[][] photo) {
         // 각 인물의 그리움 점수 매핑
         HashMap<String, Integer> yearningByNameMap = new HashMap<>();
         for (int i = 0; i < name.length; i++) {
@@ -33,7 +32,6 @@ public class lessons_176963 {
     }
 
     public static void main(String[] args) {
-        lessons_176963 lessons = new lessons_176963();
         String[] name = {"may", "kein", "kain", "radi"};
         int[] yearning = {5, 10, 1, 3};
         String[][] photo = {
@@ -41,7 +39,7 @@ public class lessons_176963 {
                 {"may", "kein", "brin"},
                 {"kon", "kain", "may", "radi"}
         };
-        System.out.println(Arrays.toString(lessons.solution(name, yearning, photo)));
+        System.out.println(Arrays.toString(solution(name, yearning, photo)));
     }
 }
 
