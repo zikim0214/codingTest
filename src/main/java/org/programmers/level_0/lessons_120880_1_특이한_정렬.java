@@ -7,9 +7,9 @@ import java.util.Arrays;
  * 특이한 정렬
  * <a href="https://school.programmers.co.kr/learn/courses/30/lessons/120880">프로그래머스 120880</a>
  */
-public class lessons_120880_1 {
+public class lessons_120880_1_특이한_정렬 {
 
-    public int[] sortClass(int[] numList, int n) {
+    public static int[] sortClass(int[] numList, int n) {
         Integer[] arr = Arrays.stream(numList).boxed().toArray(Integer[]::new);
 
         Arrays.sort(arr, (a, b) -> {
@@ -27,7 +27,6 @@ public class lessons_120880_1 {
     public static void main(String[] args) {
         int n = 4;
         int[] numList = {1, 2, 3, 4, 5, 6};
-        lessons_120880_1 lessons = new lessons_120880_1();
-        System.out.println(Arrays.toString(lessons.sortClass(numList, n)));
+        System.out.println(Arrays.toString(sortClass(numList, n)));
     }
 }

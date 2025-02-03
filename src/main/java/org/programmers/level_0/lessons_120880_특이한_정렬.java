@@ -7,9 +7,9 @@ import java.util.Arrays;
  * 특이한 정렬
  * <a href="https://school.programmers.co.kr/learn/courses/30/lessons/120880">프로그래머스 120880</a>
  */
-public class lessons_120880 {
+public class lessons_120880_특이한_정렬 {
 
-    public int[] sortClass(int[] numList, int n) {
+    public static int[] sortClass(int[] numList, int n) {
         int numListLength = numList.length;
 
         // 배열의 전체 길이에서 한 원소씩 줄여나가며 반복
@@ -30,8 +30,7 @@ public class lessons_120880 {
     public static void main(String[] args) {
         int n = 4;
         int[] numList = {1, 2, 3, 4, 5, 6};
-        lessons_120880 lessons = new lessons_120880();
-        System.out.println(Arrays.toString(lessons.sortClass(numList, n)));
+        System.out.println(Arrays.toString(sortClass(numList, n)));
     }
 }
 /*

@@ -7,9 +7,9 @@ import java.util.Arrays;
  * 배열 만들기 2
  * <a href="https://school.programmers.co.kr/learn/courses/30/lessons/181921">프로그래머스 181921</a>
  */
-public class lessons_181921 {
+public class lessons_181921_배열_만들기2 {
 
-    public int[] solution(int l, int r) {
+    public static int[] solution(int l, int r) {
 
         // 몇개의 answer가 존재하는지 모르므로 list로 생성
         ArrayList<Integer> answer = new ArrayList<>();
@@ -31,8 +31,7 @@ public class lessons_181921 {
     public static void main(String[] args) {
         int l = 5;
         int r = 555;
-        lessons_181921 lesson = new lessons_181921();
-        System.out.println(Arrays.toString(lesson.solution(l, r)));
+        System.out.println(Arrays.toString(solution(l, r)));
     }
 }
 
