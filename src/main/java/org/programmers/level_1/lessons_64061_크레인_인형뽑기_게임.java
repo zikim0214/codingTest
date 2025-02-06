@@ -1,6 +1,5 @@
 package org.programmers.level_1;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -22,25 +21,27 @@ public class lessons_64061_크레인_인형뽑기_게임 {
             for (int row = 0; row < board.length; row++) {
                 // 스택에 동일한 숫자가 없는 경우 board[row][move] != mStack.peek()
                 // 스택에 아예 없는 경우 mStack.isEmpty()
-                if (board[row][move] != 0){
-                    // 0 이 아니니까 stack에 넣어야지
-                    mStack.push(board[row][move]);
 
-
-
-                }
-                if (!mStack.isEmpty()) {
-                    if (board[row][move] != mStack.peek()) {
+                // 모든 전제조건 = 인형이 존재해야 한다
+                // 하나를 꺼내고 두개를 꺼내기 전에 break 진행해야 한다.
+                if (board[row][move] != 0) {
+                    // stack이 비어있는 경우
+                    // stack이 비어있지 않고 현재 값과 동일한 경우
+                    // stack이 비어있지 않고 현재 값과 동일하지 않는 경우
+                    if (mStack.isEmpty()) {
                         mStack.push(board[row][move]);
                         board[row][move] = 0;
+                        break;
                     } else if (board[row][move] == mStack.peek()) {
                         mStack.pop();
                         board[row][move] = 0;
                         removedCount += 2;
+                        break;
+                    } else if (board[row][move] != mStack.peek()) {
+                        mStack.push(board[row][move]);
+                        board[row][move] = 0;
+                        break;
                     }
-                } else {
-                    mStack.push(board[row][move]);
-                    board[row][move] = 0;
                 }
             }
         }
