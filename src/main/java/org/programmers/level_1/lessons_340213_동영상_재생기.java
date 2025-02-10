@@ -10,23 +10,23 @@ public class lessons_340213_동영상_재생기 {
         int opStartInt = timeToSeconds(op_start); // 오프닝 시작 시각
         int opEndInt = timeToSeconds(op_end); // 오프닝이 끝나는 시각
 
+        if (opStartInt <= posInt && opEndInt >= posInt) {
+            posInt = opEndInt;
+        }
         for (String action : commands) {
-            if (opStartInt <= posInt && opEndInt >= posInt) {
-                posInt = opEndInt;
-            }
             if (action.equals("next")) {
                 posInt += 10;
                 if (posInt >= videoLenInt) {
                     posInt = videoLenInt;
-                }
-                if (opStartInt <= posInt && opEndInt >= posInt) {
-                    posInt = opEndInt;
                 }
             } else if (action.equals("prev")) {
                 posInt -= 10;
                 if (posInt <= 0) {
                     posInt = 0;
                 }
+            }
+            if (opStartInt <= posInt && opEndInt >= posInt) {
+                posInt = opEndInt;
             }
         }
         // 사용자의 입력이 모두 끝난 후 동영상의 위치를 "mm:ss" 형식으로 return
@@ -42,17 +42,17 @@ public class lessons_340213_동영상_재생기 {
     }
 
     public static void main(String[] args) {
-//        String video_len = "07:22"; // 동영상의 길이
-//        String pos = "04:05"; // 기능이 수행되기 직전의 재생위치
-//        String op_start = "00:15";// 오프닝 시작 시각
-//        String op_end = "04:07"; // 오프닝이 끝나는 시각
-//        String[] commands = {"next"};
+        String video_len = "07:22"; // 동영상의 길이
+        String pos = "04:05"; // 기능이 수행되기 직전의 재생위치
+        String op_start = "00:15";// 오프닝 시작 시각
+        String op_end = "04:07"; // 오프닝이 끝나는 시각
+        String[] commands = {"next"};
 
-        String video_len = "10:55";
-        String pos = "00:05";
-        String op_start = "00:15";
-        String op_end = "06:55";
-        String[] commands = {"prev", "next", "next"};
+//        String video_len = "10:55";
+//        String pos = "00:05";
+//        String op_start = "00:15";
+//        String op_end = "06:55";
+//        String[] commands = {"prev", "next", "next"};
 
 //        String video_len = "34:33"; // 동영상의 길이
 //        String pos = "13:00"; // 기능이 수행되기 직전의 재생위치
