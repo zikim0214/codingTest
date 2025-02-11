@@ -34,6 +34,18 @@ public class StreamAPIExample {
         int[] intArray = {1, 2, 3, 4, 5};
         IntStream intArrayStream = Arrays.stream(intArray);
         intArrayStream.forEach(System.out::println);
+
+        // iterate 메서드를 사용하여 스트림 생성
+        Stream<Integer> iteratedStream = Stream.iterate(0, n -> n + 2).limit(5);
+        iteratedStream.forEach(System.out::println);
+
+        // peek 메서드를 사용하여 중간에 요소를 확인
+        List<String> peekList = Arrays.asList("Alice", "Bob", "Charlie");
+        peekList.stream()
+                .peek(name -> System.out.println("Before filter: " + name))
+                .filter(name -> name.startsWith("A"))
+                .peek(name -> System.out.println("After filter: " + name))
+                .collect(Collectors.toList());
     }
 }
 ```
@@ -86,6 +98,17 @@ public class StreamAPIExample {
     ```java
     IntStream intStream = IntStream.of(1, 2, 3, 4, 5);
     Stream<Integer> boxedStream = intStream.boxed();
+    ```
+
+7. **`peek`**
+    - 스트림의 각 요소를 소비하지 않고 중간에 요소를 확인할 수 있습니다. 주로 디버깅 목적으로 사용됩니다.
+    ```java
+    List<String> peekList = Arrays.asList("Alice", "Bob", "Charlie");
+    peekList.stream()
+            .peek(name -> System.out.println("Before filter: " + name))
+            .filter(name -> name.startsWith("A"))
+            .peek(name -> System.out.println("After filter: " + name))
+            .collect(Collectors.toList());
     ```
 
 ### 종단 연산 (Terminal Operations)
@@ -199,4 +222,12 @@ Java 8에서는 기본형 특화 스트림인 `IntStream`, `LongStream`, `Double
     intArrayStream.forEach(System.out::println);
     ```
 
+7. **iterate 메서드를 사용하여 스트림 생성**
+    - 무한 스트림을 생성하고 지정된 조건으로 요소를 생성할 수 있습니다.
+    ```java
+    Stream<Integer> iteratedStream = Stream.iterate(0, n -> n + 2).limit(5);
+    iteratedStream.forEach(System.out::println);
+    ```
+
 `Stream` API는 데이터 처리 파이프라인을 쉽게 구성하고, 병렬 처리도 간단히 수행할 수 있게 해줍니다. 이를 통해 코드의 가독성과 유지보수성을 높일 수 있습니다.
+```
