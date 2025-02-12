@@ -231,3 +231,136 @@ Java 8에서는 기본형 특화 스트림인 `IntStream`, `LongStream`, `Double
 
 `Stream` API는 데이터 처리 파이프라인을 쉽게 구성하고, 병렬 처리도 간단히 수행할 수 있게 해줍니다. 이를 통해 코드의 가독성과 유지보수성을 높일 수 있습니다.
 ```
+`forEach` 함수는 스트림의 각 요소를 순회하며 특정 작업을 수행하는데 사용됩니다. 하지만 `forEach`는 스트림의 요소를 변환하거나 필터링하여 새로운 스트림을 생성하지 않습니다. 만약 스트림의 요소를 변환하거나 필터링하여 새로운 배열로 반환하고자 한다면, `map`, `filter`와 같은 변환 및 필터링 메서드를 사용하는 것이 더 적합합니다.
+
+### `forEach`와 `map`, `filter`의 차이
+
+- **`forEach`**: 스트림의 각 요소에 대해 주어진 작업을 수행합니다. 반환값이 없으며, 주로 부작용이 있는 작업(예: 출력, 로그 기록 등)에 사용됩니다.
+  
+  ```java
+  Arrays.stream(intStrs).forEach(intStr -> System.out.println(intStr));
+  ```
+
+- **`map`**: 스트림의 각 요소를 주어진 함수에 따라 변환하여 새로운 스트림을 생성합니다.
+  
+  ```java
+  Arrays.stream(intStrs).map(intStr -> intStr.substring(s, s + l));
+  ```
+
+- **`filter`**: 스트림의 각 요소를 주어진 조건에 따라 필터링하여 새로운 스트림을 생성합니다.
+  
+  ```java
+  Arrays.stream(intStrs).filter(intStr -> intStr.length() > k);
+  ```
+
+### `forEach` 대신 `map`과 `filter` 사용 예제
+
+아래는 `forEach`를 사용하지 않고 `map`과 `filter`를 사용하여 문제를 해결하는 예제입니다:
+
+```java name=lessons_181912_배열_만들기5.java
+import java.util.Arrays;
+
+public class lessons_181912_배열_만들기5 {
+    public static int[] solution(String[] intStrs, int k, int s, int l) {
+        return Arrays.stream(intStrs)
+                     .map(intStr -> intStr.substring(s, s + l))  // 부분 문자열 추출
+                     .mapToInt(Integer::parseInt)               // 정수로 변환
+                     .filter(subStrToInt -> subStrToInt > k)     // 필터링
+                     .toArray();                                // 배열로 변환
+    }
+
+    public static void main(String[] args) {
+        String[] intStrs = {"0123456789", "9876543210", "9999999999999"};
+        int k = 50000;
+        int s = 5;
+        int l = 5;
+        System.out.println(Arrays.toString(solution(intStrs, k, s, l)));
+    }
+}
+```
+
+### 결론
+
+`forEach`는 스트림의 각 요소에 대해 작업을 수행하는데 유용하지만, 변환 및 필터링 작업에는 적합하지 않습니다. 변환 및 필터링 작업에는 `map`, `filter`와 같은 메서드를 사용하는 것이 더 적합하며, 이를 통해 원하는 결과를 얻을 수 있습니다.
+
+
+기본형 스트림과 객체 스트림의 차이를 이해하는 것은 Java Stream API를 효과적으로 사용하는 데 매우 중요합니다. 이 두 가지 스트림은 데이터 처리 및 변환에 있어 서로 다른 기능과 성능 최적화를 제공합니다.
+
+## 기본형 스트림 vs 객체 스트림
+
+### 기본형 스트림 (Primitive Streams)
+기본형 스트림은 기본형 데이터를 효율적으로 처리하기 위해 설계된 스트림입니다. Java는 기본형 스트림을 위해 `IntStream`, `LongStream`, `DoubleStream`을 제공합니다. 기본형 스트림은 박싱과 언박싱을 피하여 성능을 최적화합니다.
+
+- **IntStream**: `int` 타입의 스트림
+- **LongStream**: `long` 타입의 스트림
+- **DoubleStream**: `double` 타입의 스트림
+
+### 객체 스트림 (Object Streams)
+객체 스트림은 객체 데이터를 처리하는 일반적인 스트림입니다. 모든 참조 타입(객체)을 처리할 수 있으며, 더 많은 중간 연산과 종단 연산을 제공합니다.
+
+- **Stream<T>**: 제네릭 타입 `T`의 스트림
+
+### 주요 차이점
+
+1. **데이터 타입**:
+   - 기본형 스트림은 `int`, `long`, `double`과 같은 기본형 데이터를 처리합니다.
+   - 객체 스트림은 모든 참조 타입(객체)을 처리합니다.
+
+2. **성능**:
+   - 기본형 스트림은 박싱과 언박싱을 피하여 성능을 최적화합니다.
+   - 객체 스트림은 박싱과 언박싱이 필요할 수 있으므로 성능이 약간 떨어질 수 있습니다.
+
+3. **메서드**:
+   - 기본형 스트림은 기본형 데이터에 특화된 메서드를 제공합니다 (`sum`, `average`, `min`, `max` 등).
+   - 객체 스트림은 일반적인 중간 연산 (`map`, `filter`, `flatMap` 등)과 종단 연산 (`collect`, `reduce` 등)을 제공합니다.
+
+### 예제 코드
+
+기본형 스트림과 객체 스트림을 사용하는 예제를 통해 차이를 이해해보겠습니다.
+
+```java name=PrimitiveStreamExample.java
+import java.util.stream.IntStream;
+
+public class PrimitiveStreamExample {
+    public static void main(String[] args) {
+        // IntStream 사용 예제
+        int[] intArray = {1, 2, 3, 4, 5};
+
+        // IntStream을 사용하여 각 요소를 두 배로 만들고 합계 구하기
+        int sum = IntStream.of(intArray)
+                           .map(n -> n * 2)
+                           .sum();
+
+        System.out.println("Sum of doubled values: " + sum);
+    }
+}
+```
+
+```java name=ObjectStreamExample.java
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class ObjectStreamExample {
+    public static void main(String[] args) {
+        // 객체 스트림 사용 예제
+        List<String> stringList = Arrays.asList("1", "2", "3", "4", "5");
+
+        // 객체 스트림을 사용하여 문자열을 정수로 변환하고 각 요소를 두 배로 만들어 리스트로 수집
+        List<Integer> doubledList = stringList.stream()
+                                              .map(Integer::parseInt)
+                                              .map(n -> n * 2)
+                                              .collect(Collectors.toList());
+
+        System.out.println("List of doubled values: " + doubledList);
+    }
+}
+```
+
+### 주요 차이점 요약
+
+- **데이터 타입**: 기본형 스트림은 기본형 데이터를, 객체 스트림은 객체 데이터를 처리합니다.
+- **성능 최적화**: 기본형 스트림은 박싱과 언박싱을 피하여 성능을 최적화합니다.
+- **메서드 제공**: 기본형 스트림은 기본형 데이터에 특화된 메서드를, 객체 스트림은 더 많은 중간 및 종단 연산을 제공합니다.
+
+이 예제들을 통해 기본형 스트림과 객체 스트림의 차이를 더 잘 이해할 수 있을 것입니다. 추가적인 질문이 있으면 언제든지 말씀해 주세요!
