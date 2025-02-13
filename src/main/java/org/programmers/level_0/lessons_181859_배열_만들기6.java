@@ -3,6 +3,7 @@ package org.programmers.level_0;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 
 /**
@@ -11,19 +12,32 @@ import java.util.Arrays;
 public class lessons_181859_배열_만들기6 {
     public static int[] solution(int[] arr) {
         ArrayList<Integer> stk = new ArrayList<>();
-        for (int i = 0; i < arr.length; ) {
+//        for (int i = 0; i < arr.length; ) {
+//            if (stk.isEmpty()) {
+//                stk.add(arr[i]);
+//            } else {
+//                int endPoint = stk.size() - 1;
+//                if (stk.get(endPoint) == arr[i]) {
+//                    stk.remove(endPoint);
+//                } else {
+//                    stk.add(endPoint + 1, arr[i]);
+//                }
+//            }
+//            i++;
+//        }
+        IntStream.of(arr).forEach(value -> {
             if (stk.isEmpty()) {
-                stk.add(arr[i]);
+                stk.add(value);
             } else {
                 int endPoint = stk.size() - 1;
-                if (stk.get(endPoint) == arr[i]) {
+                if (stk.get(endPoint) == value) {
                     stk.remove(endPoint);
                 } else {
-                    stk.add(endPoint + 1, arr[i]);
+                    stk.add(value);
                 }
             }
-            i++;
-        }
+        });
+
         return stk.isEmpty() ? new int[]{-1} : stk.stream().mapToInt(Integer::intValue).toArray();
     }
 
