@@ -364,3 +364,112 @@ public class ObjectStreamExample {
 - **메서드 제공**: 기본형 스트림은 기본형 데이터에 특화된 메서드를, 객체 스트림은 더 많은 중간 및 종단 연산을 제공합니다.
 
 이 예제들을 통해 기본형 스트림과 객체 스트림의 차이를 더 잘 이해할 수 있을 것입니다. 추가적인 질문이 있으면 언제든지 말씀해 주세요!
+
+
+
+
+이 설명은 Java의 `Stream<T>` 인터페이스에 있는 `collect` 메서드에 대한 것입니다. `collect` 메서드는 스트림의 요소들을 수집하여 최종 결과를 생성하는데 사용됩니다. 이를 위해 `Collector`를 사용하며, `Collector`는 수집 전략을 캡슐화한 객체입니다. 이 메서드는 스트림의 요소를 변환하여 원하는 자료 구조로 만들거나, 특정 기준에 따라 그룹화하거나, 다른 방식으로 축약하는 데 사용됩니다.
+
+### 주요 내용
+- **`collect` 메서드**:
+  - 스트림의 요소를 수집하여 최종 결과를 생성하는 데 사용됩니다.
+  - `Collector` 객체를 매개변수로 받아서 수집 전략을 정의합니다.
+  - 이 메서드는 스트림의 최종 연산(terminal operation)입니다.
+
+### 매개변수
+- **`collector`**: 스트림의 요소를 수집하는 방법을 정의하는 `Collector` 객체입니다.
+
+### 반환값
+- **수집 결과**: `Collector`가 정의한 방식대로 수집된 최종 결과를 반환합니다.
+
+### API 사용 예제
+1. **문자열 스트림을 리스트로 수집**:
+   ```java
+   List<String> asList = stringStream.collect(Collectors.toList());
+   ```
+
+2. **`Person` 객체를 도시에 따라 그룹화**:
+   ```java
+   Map<String, List<Person>> peopleByCity = personStream.collect(Collectors.groupingBy(Person::getCity));
+   ```
+
+3. **`Person` 객체를 주와 도시에 따라 그룹화**:
+   ```java
+   Map<String, Map<String, List<Person>>> peopleByStateAndCity = personStream.collect(Collectors.groupingBy(Person::getState, Collectors.groupingBy(Person::getCity)));
+   ```
+
+### 참고
+- `Collectors` 클래스는 다양한 수집 전략을 제공하는 정적 메서드를 포함하고 있습니다.
+- 병렬 스트림에서 동작할 때, `Collector`가 concurrent하고 스트림이 정렬되지 않았거나 `Collector`가 정렬되지 않았다면 병렬 수집이 수행됩니다.
+- 병렬 수집 중에는 여러 개의 중간 결과가 생성, 채워지고 병합되어 안전하게 동작합니다. 따라서 비동기 데이터 구조(예: `ArrayList`)를 사용할 때도 추가적인 동기화가 필요하지 않습니다.
+
+### 예제 코드
+
+```java name=StreamCollectExample.java
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class StreamCollectExample {
+    public static void main(String[] args) {
+        // 예제 1: 문자열 스트림을 리스트로 수집
+        Stream<String> stringStream = Stream.of("apple", "banana", "cherry");
+        List<String> asList = stringStream.collect(Collectors.toList());
+        System.out.println(asList);
+
+        // 예제 2: Person 객체를 도시에 따라 그룹화
+        List<Person> people = Arrays.asList(
+            new Person("Alice", "New York"),
+            new Person("Bob", "San Francisco"),
+            new Person("Charlie", "New York")
+        );
+        Map<String, List<Person>> peopleByCity = people.stream()
+                                                       .collect(Collectors.groupingBy(Person::getCity));
+        System.out.println(peopleByCity);
+
+        // 예제 3: Person 객체를 주와 도시에 따라 그룹화
+        List<Person> peopleWithState = Arrays.asList(
+            new Person("Alice", "New York", "NY"),
+            new Person("Bob", "San Francisco", "CA"),
+            new Person("Charlie", "New York", "NY")
+        );
+        Map<String, Map<String, List<Person>>> peopleByStateAndCity = peopleWithState.stream()
+                                                                                     .collect(Collectors.groupingBy(Person::getState, Collectors.groupingBy(Person::getCity)));
+        System.out.println(peopleByStateAndCity);
+    }
+}
+
+class Person {
+    private String name;
+    private String city;
+    private String state;
+
+    public Person(String name, String city) {
+        this.name = name;
+        this.city = city;
+    }
+
+    public Person(String name, String city, String state) {
+        this.name = name;
+        this.city = city;
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + city + ", " + state + ")";
+    }
+}
+```
+
+이 예제 코드에서는 `Stream`의 `collect` 메서드를 사용하여 다양한 방법으로 데이터를 수집하는 방법을 보여줍니다. `Person` 클래스는 도시와 주 정보를 포함한 객체를 나타냅니다.
