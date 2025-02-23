@@ -8,7 +8,6 @@ import java.util.*;
 public class lessons_92334_신고_결과_받기 {
     public static int[] solution(String[] id_list, String[] report, int k) {
         int[] answer = {};
-        ArrayList<Integer> answerList = new ArrayList<>();
         // 유저별로 누구를 신고했는지 기록하기 위한 맵 (Set으로 중복 신고 제거)
         // 정지된 유저를 찾기 위해 메서드 생성
         Map<String, Set<String>> reportLog = new HashMap<>();
@@ -17,8 +16,8 @@ public class lessons_92334_신고_결과_받기 {
         // k 번 이상이라면 정지이며 정지되게 신고한 사용자들은 메일을 받는다.
         Map<String, Integer> reportCount = new HashMap<>();
 
-        Map<String, Integer> idIndex = new HashMap<>();
-
+        // 결과값 순서 중요
+        LinkedHashMap<String, Integer> idIndex = new LinkedHashMap<>();
 
         // 초기화
         for (String s : id_list) {
